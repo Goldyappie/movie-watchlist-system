@@ -2,15 +2,34 @@ import { useState } from "react"
 import "../styles/Login.css"
 
 function Login({ setPage }) {
-    const [username, setUsername] = useState("");
+    const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
 
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (!username || !password) {
+        if (!identifier || !password) {
             alert("Please input all fields!")
             return;
+        }
+
+        const response = await fetch("http://localhost:5000/api/users/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                identifier: identifier,
+                password
+            })
+        })
+
+        const data = await response.json();
+        if (response.ok) {
+            console.log(data.message)
+            localStorage.setItem("token", data.token);
+        } else {
+            console.log(data.message)
         }
 
     }
@@ -24,8 +43,8 @@ function Login({ setPage }) {
                 <input
                     type="text"
                     placeholder="Username or Email"
-                    value={username}
-                    onChange={(e) => { setUsername(e.target.value) }}
+                    value={identifier}
+                    onChange={(e) => { setIdentifier(e.target.value) }}
                 />
 
                 <label>Password</label>
