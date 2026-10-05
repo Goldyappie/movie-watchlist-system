@@ -1,7 +1,7 @@
 import { useState } from "react"
 import "../styles/Register.css"
 
-function Register() {
+function Register({ setPage }) {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -50,6 +50,9 @@ function Register() {
                 />
 
                 <button type="submit">Sign Up</button>
+                <button type="button" onClick={() => setPage("login")}>
+                    Log in
+                </button>
             </form>
         </div >
     )
