@@ -28,8 +28,9 @@ function Login({ setPage }) {
         if (response.ok) {
             console.log(data.message)
             localStorage.setItem("token", data.token);
+            setPage("movies");
         } else {
-            console.log(data.message)
+            console.log(data.errors)
         }
 
     }
